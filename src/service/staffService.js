@@ -1,4 +1,5 @@
 const staff = require("../models/staffModel");
+const errorHandle = require("../exception/errorException");
 
 const createStaff = async (req, res) => {
   try {
@@ -10,16 +11,10 @@ const createStaff = async (req, res) => {
         return res.status(201).json(addStaff);
       })
       .catch((err) => {
-        return res.status(400).json({
-          success: false,
-          message: "Personel oluşturulamadı : " + err,
-        });
+        errorHandle.errorHandle(res, err, 400, "Personel Oluşturulamadı : ");
       });
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Personel Oluşturulamadı : " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Personel Oluşturulamadı : ");
   }
 };
 
@@ -28,10 +23,7 @@ const getAll = async (req, res) => {
     const collect = await staff.find();
     return res.status(200).json(collect);
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Personel getirilemedi: " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Personel getirilemedi : ");
   }
 };
 
@@ -41,10 +33,7 @@ const findId = async (req, res) => {
     const collect = await staff.findById(id);
     return res.status(200).json(collect);
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Personel getirilemedi: " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Personel getirilemedi : ");
   }
 };
 
@@ -55,20 +44,15 @@ const updateStaff = async (req, res) => {
     isActive: req.body.isACtive,
   };
   try {
-    const updatedStaff = await staff.findByIdAndUpdate(
-      id,
-      updatedData,
-      { new: true } // new: true, güncellenmiş belgeyi döndürür
-    );
+    const updatedStaff = await staff.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
     if (!updatedStaff) {
-      return res.status(404).json({ message: "Staff bulunamadı" });
+      errorHandle.errorHandle(res, "", 404, "Personel bulunamadı : ");
     }
     res.status(200).json(updatedStaff);
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Staff güncellenemedi: " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Personel güncellenemedi : ");
   }
 };
 

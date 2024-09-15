@@ -14,16 +14,10 @@ const createAnnouncement = async (req, res) => {
         return res.status(201).json(addAnnouncement);
       })
       .catch((err) => {
-        return res.status(400).json({
-          success: false,
-          message: "Duyuru oluşturulamadı : " + err,
-        });
+        errorHandle.errorHandle(res, err, 400, "Duyuru oluşturulamadı : ");
       });
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Duyuru Oluşturulamadı : " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Duyuru oluşturulamadı : ");
   }
 };
 
@@ -32,10 +26,7 @@ const getAll = async (req, res) => {
     const allList = await announcement.find();
     return res.status(200).json(allList);
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Duyurular getirilemedi: " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Duyurular getirilemedi : ");
   }
 };
 
@@ -45,10 +36,7 @@ const isActiveList = async (req, res) => {
     const allList = await announcement.findById(id);
     return res.status(200).json(allList);
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Duyurular getirilemedi: " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Duyurular getirilemedi : ");
   }
 };
 
@@ -56,23 +44,20 @@ const updateStatus = async (req, res) => {
   const { id } = req.params;
 
   const updatedData = {
-    isActive:req.body.status
-  }
+    isActive: req.body.status,
+  };
   try {
     const updatedAnnouncement = await announcement.findByIdAndUpdate(
       id,
       updatedData,
-      { new: true } // new: true, güncellenmiş belgeyi döndürür
+      { new: true }
     );
     if (!updatedAnnouncement) {
-      return res.status(404).json({ message: "Duyuru bulunamadı" });
+      errorHandle.errorHandle(res, "", 400, "Duyurular bulunamadı : ");
     }
     res.status(200).json(updatedAnnouncement);
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Duyuru güncellenemedi: " + err,
-    });
+    errorHandle.errorHandle(res, "", 500, "Duyuru güncellenemedi : ");
   }
 };
 

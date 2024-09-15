@@ -6,33 +6,6 @@ const hashPassword = async (password) => {
   return bcrypt.hash(password, 10);
 };
 
-const errorHandle = async (mail, gsm) => {
-  console.log("geldi");
-  const isEmailAllReadyExist = await users.findOne({
-    mail: mail,
-  });
-  console.log("isEmail", isEmailAllReadyExist);
-  if (isEmailAllReadyExist) {
-    res.status(400).json({
-      status: 400,
-      message: "Email all ready in use",
-    });
-    return;
-  }
-
-  const isGsmAllReadyExist = await users.findOne({
-    gsm: gsm,
-  });
-  console.log(isGsmAllReadyExist);
-  if (isGsmAllReadyExist) {
-    res.status(400).json({
-      status: 400,
-      message: "Email all ready in use",
-    });
-    return;
-  }
-};
-
 const addUsers = async (req, res) => {
   try {
     const { name, surname, gsm, mail, password, role, isActive, room } =
@@ -57,16 +30,10 @@ const addUsers = async (req, res) => {
         return res.status(201).json(addUser);
       })
       .catch((err) => {
-        return res.status(400).json({
-          success: false,
-          message: "Kayıt oluşturulamadı : " + err,
-        });
+        errorHandle.errorHandle(res, err, 400, "Kayıt oluşturulamadı : ");
       });
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Kayıt oluşturulamadı : " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Kayıt oluşturulamadı : ");
   }
 };
 
@@ -75,14 +42,11 @@ const getAllUsers = async (req, res) => {
     const allUsers = await users.find();
     return res.status(200).json(allUsers);
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Kullanıcılar getirilemedi: " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, "Kullanıcılar getirilemedi : ");
   }
 };
 
 module.exports = {
   addUsers,
-  getAllUsers
+  getAllUsers,
 };

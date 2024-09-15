@@ -1,17 +1,18 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const users = require("../models/usersModel");
+const errorHandle = require("../exception/errorException");
 
 const loginService = async (req, res) => {
   try {
     const { gsm, password } = req.body;
     const user = await users.findOne({ gsm });
     if (!user) {
-      return res.status(401).json({ error: "Authentication failed" });
+      errorHandle.errorHandle(res, "", 401, "Authentication failed");
     }
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return res.status(401).json({ error: "Authentication failed" });
+      errorHandle.errorHandle(res, "", 401, "Authentication failed");
     }
     const token = jwt.sign(
       {
@@ -29,10 +30,7 @@ const loginService = async (req, res) => {
     );
     res.status(200).json({ token });
   } catch (err) {
-    return res.status(500).json({
-      success: false,
-      message: "Giriş Yapılamadı Sistem Yöneticisine Başvurunuz : " + err,
-    });
+    errorHandle.errorHandle(res, err, 500, msg);
   }
 };
 
