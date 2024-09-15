@@ -70,6 +70,19 @@ const addUsers = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const allUsers = await users.find();
+    return res.status(200).json(allUsers);
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Kullanıcılar getirilemedi: " + err,
+    });
+  }
+};
+
 module.exports = {
   addUsers,
+  getAllUsers
 };

@@ -1,10 +1,8 @@
 const router = require("express").Router();
-const usersService=require("../service/usersService")
+const usersService = require("../service/usersService");
 
-router.get("/getAll",(req,res)=>{
-    res.send("users api")
-})
+router.post("/addUsers", usersService.addUsers);
 
-router.post("/addUsers",usersService.addUsers)
+router.get("/getAll", usersService.getAllUsers);
 
-module.exports=router
+module.exports = router;
