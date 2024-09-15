@@ -3,6 +3,7 @@ const verifyToken = require("./src/middleware/authMiddleware");
 const authRouter = require("./src/router/authRouter");
 const usersRouter = require("./src/router/usersRouter");
 const announcementRouter = require("./src/router/announcementRouter");
+const staffRouter = require("./src/router/staffRouter");
 
 // require
 require("dotenv").config();
@@ -27,6 +28,7 @@ server.use((req, res, next) => {
 server.use("/auth", authRouter);
 server.use("/users", usersRouter);
 server.use("/announcement", announcementRouter);
+server.use("/staff", staffRouter);
 
 server.get("/", (req, res) => {
   res.send("merhaba");
