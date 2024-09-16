@@ -1,12 +1,12 @@
 const router = require("express").Router();
-const announcementService=require("../service/announcementService")
+const announcementService = require("../service/announcementService")
 
-router.post("/addAnnouncement",announcementService.createAnnouncement)
+router.post("/addAnnouncement", announcementService.createAnnouncement)
 
-router.get("/getAll",announcementService.getAll)
+router.get("/getAll", announcementService.getAll)
 
-router.post("/getActive",announcementService.isActiveList)
+router.post("/getActive", announcementService.isActiveList)
 
-router.put("/updateAnnouncement/:id",announcementService.updateStatus)
+router.put("/updateAnnouncement/:id", announcementService.updateStatus)
 
 module.exports = router;
