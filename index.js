@@ -18,7 +18,7 @@ const port = process.env.DEV_PORT;
 server.use(express.json());
 
 server.use((req, res, next) => {
-  if (req.path === "/auth/login") {
+  if (req.path === "/auth/login" || req.path === "/users/addUsers") {
     return next();
   }
   verifyToken(req, res, next);
