@@ -4,6 +4,8 @@ const authRouter = require("./src/router/authRouter");
 const usersRouter = require("./src/router/usersRouter");
 const announcementRouter = require("./src/router/announcementRouter");
 const staffRouter = require("./src/router/staffRouter");
+const walletRouter = require("./src/router/walletRouter");
+const cashRouter = require("./src/router/cashRouter");
 
 // require
 require("dotenv").config();
@@ -18,10 +20,10 @@ const port = process.env.DEV_PORT;
 server.use(express.json());
 
 server.use((req, res, next) => {
-  if (req.path === "/auth/login" || req.path === "/users/addUsers") {
-    return next();
-  }
-  verifyToken(req, res, next);
+    if (req.path === "/auth/login" || req.path === "/users/addUsers") {
+        return next();
+    }
+    verifyToken(req, res, next);
 });
 
 // routers
@@ -29,11 +31,13 @@ server.use("/auth", authRouter);
 server.use("/users", usersRouter);
 server.use("/announcement", announcementRouter);
 server.use("/staff", staffRouter);
+server.use("/wallet", walletRouter)
+server.use("/cash", cashRouter)
 
 server.get("/", (req, res) => {
-  res.send("merhaba");
+    res.send("merhaba");
 });
 
 server.listen(port, () => {
-  console.log("sunucu ayakta dinleniyor");
+    console.log("sunucu ayakta dinleniyor");
 });
