@@ -10,6 +10,7 @@ const cashRouter = require("./src/router/cashRouter");
 // require
 require("dotenv").config();
 require("./src/config/dbConnection");
+const cors = require('cors');
 
 // constant
 const express = require("express");
@@ -18,6 +19,11 @@ const port = process.env.DEV_PORT;
 
 //express
 server.use(express.json());
+
+//cors
+server.use(cors({
+    origin: '*'
+}));
 
 server.use((req, res, next) => {
     if (req.path === "/auth/login" || req.path === "/users/addUsers") {
