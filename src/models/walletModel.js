@@ -12,6 +12,14 @@ const walletModel = new mongoose.Schema({
     price:{
         type:Number,
         required:true
+    },
+    gsm: {
+        type: Number,
+        required: true
+    },
+    role: {
+        type: String,
+        required: true,
     }
 }, {collection: "Wallet", timestamps: true});
 

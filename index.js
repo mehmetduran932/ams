@@ -6,6 +6,7 @@ const announcementRouter = require("./src/router/announcementRouter");
 const staffRouter = require("./src/router/staffRouter");
 const walletRouter = require("./src/router/walletRouter");
 const cashRouter = require("./src/router/cashRouter");
+const rulesRouter = require("./src/router/rulesRouter");
 
 // require
 require("dotenv").config();
@@ -39,6 +40,7 @@ server.use("/announcement", announcementRouter);
 server.use("/staff", staffRouter);
 server.use("/wallet", walletRouter)
 server.use("/cash", cashRouter)
+server.use("/rules",rulesRouter)
 
 server.get("/", (req, res) => {
     res.send("merhaba");
