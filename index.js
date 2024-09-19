@@ -9,6 +9,8 @@ const cashRouter = require("./src/router/cashRouter");
 const rulesRouter = require("./src/router/rulesRouter");
 const inOutTypeRouter = require("./src/router/inOutMoneyTypesRouter");
 const tenantRouter = require("./src/router/tenantRouter");
+const rolesRouter = require("./src/router/rolesRouter");
+const bankRouter = require("./src/router/bankInfoRouter");
 
 // require
 require("dotenv").config();
@@ -45,6 +47,8 @@ server.use("/cash", cashRouter)
 server.use("/rules", rulesRouter)
 server.use("/inOutTypes", inOutTypeRouter)
 server.use("/tenant", tenantRouter)
+server.use("/roles", rolesRouter)
+server.use("/bank", bankRouter)
 
 server.get("/", (req, res) => {
     res.send("merhaba");
